@@ -1,0 +1,32 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-14.04
+    driver:
+      customize:
+        memory: 2048
+      network:
+        - ["forwarded_port", {guest: 8081, host: 8081}]
+  - name: ubuntu-16.04
+    driver:
+      customize:
+        memory: 2048
+      network:
+        - ["forwarded_port", {guest: 8081, host: 8082}]
+  - name: centos-7.1
+    driver:
+      customize:
+        memory: 2048
+      network:
+        - ["forwarded_port", {guest: 8081, host: 8083}]
+
+suites:
+  - name: default
+    run_list:
+      - recipe[docker-nexus::default]
+    attributes:
